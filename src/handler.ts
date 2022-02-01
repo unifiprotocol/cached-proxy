@@ -5,6 +5,7 @@ export async function handleRequest(event: FetchEvent): Promise<Response> {
   const cacheUrl = new URL(request.url)
   const targetUrl = decodeURIComponent(cacheUrl.search.replace(/^(\?)/, ''))
   let response = await fetch(targetUrl, {
+    headers: { ...request.headers },
     cf: {
       cacheTtl: ONE_HOUR_SECONDS,
       cacheEverything: true,
