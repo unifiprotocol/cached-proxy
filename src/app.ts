@@ -28,6 +28,15 @@ app.use(
   })
 )
 
+app.use(
+  '/metabase/',
+  cacheMiddleware(),
+  createProxyMiddleware({
+    target: 'http://178.62.233.25:3000/',
+    changeOrigin: true
+  })
+)
+
 const APP_PORT = process.env.PORT || 8080
 app.listen(APP_PORT, () => {
   console.log(`Reverse proxy started on ${APP_PORT}`)
