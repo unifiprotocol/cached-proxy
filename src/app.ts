@@ -21,7 +21,7 @@ app.use(
 
 app.use(
   '/ipfs/',
-  cacheMiddleware(),
+  cacheMiddleware(2629800000), // 1 Month
   createProxyMiddleware({
     target: 'https://cloudflare-ipfs.com/',
     changeOrigin: true
@@ -41,10 +41,11 @@ app.listen(APP_PORT, () => {
   console.log(`Reverse proxy started on ${APP_PORT}`)
 })
 
-function cacheMiddleware() {
+function cacheMiddleware(cacheDuration?: number) {
   const cacheOptions = {
     statusCodes: { include: [200] },
-    appendKey: (req: Request) => req.method
+    appendKey: (req: Request) => req.method,
+    ...(cacheDuration ? { cacheDuration } : {})
   }
   return apiCache.options(cacheOptions).middleware()
 }
