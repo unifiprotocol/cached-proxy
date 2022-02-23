@@ -1,13 +1,18 @@
 {
 	"dependencies": {
-		"axios": "^0.26.0",
+		"apicache": "^1.6.3",
 		"cors": "^2.8.5",
 		"express": "^4.17.2",
 		"http-proxy-middleware": "^2.0.3",
-		"web3": "^1.7.0"
+		"node-fetch": "2"
 	},
 	"devDependencies": {
+		"@types/apicache": "^1.6.1",
 		"@types/cors": "^2.8.12",
-		"@types/express": "^4.17.13"
+		"@types/express": "^4.17.13",
+		"prettier": "^2.5.1"
+	},
+	"scripts": {
+		"prettier-format": "prettier --config .prettierrc 'src/**/*.ts' --write"
 	}
 }
