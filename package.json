@@ -23,6 +23,6 @@
     "build": "tsc --incremental",
     "build:watch": "yarn watch yarn build",
     "start": "node dist/index.js",
-    "start:watch": "yarn watch node -r ts-node/register --inspect=9230 src/index.ts"
+    "start:watch": "yarn watch node -r ts-node/register --inspect=9300 src/index.ts"
   }
 }
