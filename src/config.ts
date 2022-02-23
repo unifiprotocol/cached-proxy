@@ -32,15 +32,14 @@ import {
   TESTNET_NODES as ONTOLOGY_TESTNET_NODES
 } from './nodes/ontology';
 import {
-  MAINNET_NODES as TRON_MAINNET_NODES,
+  EVENT_MAINNET_NODES as TRON_EVENT_MAINNET_NODES,
+  FULLHOST_MAINNET_NODES as TRON_FULLHOST_MAINNET_NODES,
   TESTNET_NODES as TRON_TESTNET_NODES
 } from './nodes/tron';
 import {
   MAINNET_NODES as ICON_MAINNET_NODES,
   TESTNET_NODES as ICON_TESTNET_NODES
 } from './nodes/icon';
-import { Blockchains } from '@unifiprotocol/utils';
-
 export const NODES: any = {
   avalanche: {
     mainnet: AVALANCHE_MAINNET_NODES,
@@ -83,46 +82,13 @@ export const NODES: any = {
     testnet: ONTOLOGY_TESTNET_NODES
   },
   tron: {
-    mainnet: TRON_MAINNET_NODES,
-    testnet: TRON_TESTNET_NODES
+    mainnet_event: TRON_EVENT_MAINNET_NODES,
+    mainnet: TRON_FULLHOST_MAINNET_NODES,
+    tesnet_event: TRON_TESTNET_NODES,
+    tesnet: TRON_TESTNET_NODES
   },
   icon: {
     mainnet: ICON_MAINNET_NODES,
     testnet: ICON_TESTNET_NODES
   }
 };
-
-export const getNodes = (_blockchain: string, _net = 'mainnet'): string[] => {
-  const { blockchain, net } = normalizeBlockchainAndNetwork(
-    _blockchain.toLowerCase(),
-    _net.toLowerCase()
-  );
-
-  if (!NODES[blockchain]) {
-    throw new Error(`Blockchain ${blockchain} does not exist.`);
-  }
-  if (!NODES[blockchain][net]) {
-    throw new Error(`Unknown network ${net} for ${blockchain}.`);
-  }
-
-  return NODES[blockchain][net];
-};
-
-function normalizeBlockchainAndNetwork(blockchain: string, net: string) {
-  switch (blockchain) {
-    case Blockchains.OntologyTestnet.toLowerCase():
-      return { blockchain: 'ontology', net: 'testnet' };
-    case Blockchains.EthereumRinkeby.toLowerCase():
-      return { blockchain: 'ethereum', net: 'rinkeby' };
-    case Blockchains.EthereumRopsten.toLowerCase():
-      return { blockchain: 'ethereum', net: 'ropsten' };
-    case Blockchains.BinanceTestnet.toLowerCase():
-      return { blockchain: 'binance', net: 'testnet' };
-    case Blockchains.BTTC.toLowerCase():
-      return { blockchain: 'bittorrent', net: 'mainnet' };
-    case Blockchains.FTM.toLowerCase():
-      return { blockchain: 'fantom', net: 'mainnet' };
-  }
-
-  return { blockchain, net };
-}
