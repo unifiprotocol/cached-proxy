@@ -4,7 +4,7 @@ import { handler } from './handler';
 import { createProxyMiddleware } from 'http-proxy-middleware';
 import apiCache from 'apicache';
 import cors from 'cors';
-
+import morgan from 'morgan';
 /*
 Proxy/Load balancer
 */
@@ -18,6 +18,7 @@ const app: Application = express();
 
 // Remove the X-Powered-By headers.
 app.disable('x-powered-by');
+app.use(morgan('tiny'));
 
 // Parse JSON bodies
 app.use(express.json());

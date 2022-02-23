@@ -1,4 +1,4 @@
-import { Response } from 'express';
+import { Request, Response } from 'express';
 import fetch, { RequestInit, Response as FetchResponse } from 'node-fetch';
 import { getNodes } from './config';
 
@@ -8,7 +8,7 @@ type Url = string;
 const MAX_RETRIES: number = 5;
 
 // Handles proxy requests
-export const handler = async (req: any, res: Response) => {
+export const handler = async (req: any, res: Response): Promise<void> => {
   req.retries = req.retries || 0;
   req.current = req.current || 0;
 
@@ -35,7 +35,7 @@ export const handler = async (req: any, res: Response) => {
     // Do request
     const reqOptions: RequestInit = {
       method: method,
-      headers: headers
+      headers: filterHeaders(headers)
     };
 
     if (!['GET', 'HEAD'].includes(method) && body) {
@@ -45,35 +45,49 @@ export const handler = async (req: any, res: Response) => {
     const desiredPath = originalUrl.replace(`/${req.params.blockchain}`, '');
     const destinationUrl = `${server}${desiredPath}`;
 
-    const response = await fetch(destinationUrl, reqOptions);
-    handleProxyResponse(response, res);
+    const nodeRes = await fetch(destinationUrl, reqOptions);
+    await handleProxyResponse(nodeRes, res);
   } catch (err) {
-    // Retry, x amount of times.
-    req.retries++;
-    req.current++;
-
-    if (req.retries < MAX_RETRIES) {
-      handler(req, res);
-    } else {
-      // After x amount of times
-      // Send back the error message
-      res.end(`${err}`);
+    if (isRetriable(err, req)) {
+      req.retries++;
+      req.current++;
+      return handler(req, res);
     }
+    res.end(`${err}`);
   }
 };
 
-function extractNodeResponseHeaders(response: FetchResponse) {
+function extractnodeResHeaders(response: FetchResponse) {
   return Object.entries(response.headers.raw()).reduce((headers, entry) => {
     return { ...headers, [entry[0]]: entry[1].join(';') };
   }, {});
 }
 
-async function handleProxyResponse(nodeResponse: FetchResponse, res: Response) {
-  if (!nodeResponse.ok) {
-    throw new Error('Error on the request');
+async function handleProxyResponse(nodeRes: FetchResponse, res: Response) {
+  if (!nodeRes.ok) {
+    throw nodeRes;
   }
-  const data = await nodeResponse.text();
-  const headers = extractNodeResponseHeaders(nodeResponse);
+  const data = await nodeRes.text();
+  const headers = extractnodeResHeaders(nodeRes);
   // Send response data back to original caller
-  res.set(headers).status(nodeResponse.status).send(data);
+  res.set(filterHeaders(headers)).status(nodeRes.status).send(data);
+}
+
+function isRetriable(error: any, req: any) {
+  return req.retries < MAX_RETRIES;
+}
+
+function filterHeaders(
+  reqHeaders: Record<string, string>
+): Record<string, string> {
+  const allowedHeadersRegex = /content-type/gim;
+  return Object.entries(reqHeaders).reduce((headers, [header, value]) => {
+    if (!header.match(allowedHeadersRegex)) {
+      return headers;
+    }
+    return {
+      ...headers,
+      [header]: value
+    };
+  }, {});
 }

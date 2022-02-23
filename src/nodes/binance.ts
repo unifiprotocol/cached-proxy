@@ -3,7 +3,7 @@
 export const MAINNET_NODES: Array<string> = [
   'https://bscrpc.com', // See: https://bscrpc.com/
 
-  'http://188.166.110.206:8545',
+  'http://159.65.160.46:8545/',
 
   // Recommended
   'https://bsc-dataseed.binance.org/',
