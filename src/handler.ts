@@ -7,6 +7,13 @@ type Url = string;
 // Define constants
 const MAX_RETRIES: number = 5;
 
+const getNodeHeaders = headerFilters((header) =>
+  ['content-type', 'authorization'].includes(header.toLowerCase())
+);
+const getProxyResponseHeaders = headerFilters((header) =>
+  ['content-type'].includes(header.toLowerCase())
+);
+
 // Handles proxy requests
 export const handler = async (req: any, res: Response): Promise<void> => {
   req.retries = req.retries || 0;
@@ -35,7 +42,7 @@ export const handler = async (req: any, res: Response): Promise<void> => {
     // Do request
     const reqOptions: RequestInit = {
       method: method,
-      headers: filterHeaders(headers)
+      headers: getNodeHeaders(headers)
     };
 
     if (!['GET', 'HEAD'].includes(method) && body) {
@@ -57,7 +64,7 @@ export const handler = async (req: any, res: Response): Promise<void> => {
   }
 };
 
-function extractnodeResHeaders(response: FetchResponse) {
+function normalizeNodeFetchHeaders(response: FetchResponse) {
   return Object.entries(response.headers.raw()).reduce((headers, entry) => {
     return { ...headers, [entry[0]]: entry[1].join(';') };
   }, {});
@@ -68,26 +75,24 @@ async function handleProxyResponse(nodeRes: FetchResponse, res: Response) {
     throw nodeRes;
   }
   const data = await nodeRes.text();
-  const headers = extractnodeResHeaders(nodeRes);
-  // Send response data back to original caller
-  res.set(filterHeaders(headers)).status(nodeRes.status).send(data);
+  const headers = normalizeNodeFetchHeaders(nodeRes);
+  res.set(getProxyResponseHeaders(headers)).status(nodeRes.status).send(data);
 }
 
 function isRetriable(error: any, req: any) {
   return req.retries < MAX_RETRIES;
 }
 
-function filterHeaders(
-  reqHeaders: Record<string, string>
-): Record<string, string> {
-  const allowedHeadersRegex = /content-type/gim;
-  return Object.entries(reqHeaders).reduce((headers, [header, value]) => {
-    if (!header.match(allowedHeadersRegex)) {
-      return headers;
-    }
-    return {
-      ...headers,
-      [header]: value
-    };
-  }, {});
+function headerFilters(filter: (header: string, value: string) => boolean) {
+  return function (reqHeaders: Record<string, string>): Record<string, string> {
+    return Object.entries(reqHeaders).reduce((headers, [header, value]) => {
+      if (!filter(header, value)) {
+        return headers;
+      }
+      return {
+        ...headers,
+        [header]: value
+      };
+    }, {});
+  };
 }
