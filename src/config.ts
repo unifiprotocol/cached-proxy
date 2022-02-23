@@ -39,6 +39,7 @@ import {
   MAINNET_NODES as ICON_MAINNET_NODES,
   TESTNET_NODES as ICON_TESTNET_NODES
 } from './nodes/icon';
+import { Blockchains } from '@unifiprotocol/utils';
 
 export const NODES: any = {
   avalanche: {
@@ -90,3 +91,38 @@ export const NODES: any = {
     testnet: ICON_TESTNET_NODES
   }
 };
+
+export const getNodes = (_blockchain: string, _net = 'mainnet'): string[] => {
+  const { blockchain, net } = normalizeBlockchainAndNetwork(
+    _blockchain.toLowerCase(),
+    _net.toLowerCase()
+  );
+
+  if (!NODES[blockchain]) {
+    throw new Error(`Blockchain ${blockchain} does not exist.`);
+  }
+  if (!NODES[blockchain][net]) {
+    throw new Error(`Unknown network ${net} for ${blockchain}.`);
+  }
+
+  return NODES[blockchain][net];
+};
+
+function normalizeBlockchainAndNetwork(blockchain: string, net: string) {
+  switch (blockchain) {
+    case Blockchains.OntologyTestnet.toLowerCase():
+      return { blockchain: 'ontology', net: 'testnet' };
+    case Blockchains.EthereumRinkeby.toLowerCase():
+      return { blockchain: 'ethereum', net: 'rinkeby' };
+    case Blockchains.EthereumRopsten.toLowerCase():
+      return { blockchain: 'ethereum', net: 'ropsten' };
+    case Blockchains.BinanceTestnet.toLowerCase():
+      return { blockchain: 'binance', net: 'testnet' };
+    case Blockchains.BTTC.toLowerCase():
+      return { blockchain: 'bittorrent', net: 'mainnet' };
+    case Blockchains.FTM.toLowerCase():
+      return { blockchain: 'fantom', net: 'mainnet' };
+  }
+
+  return { blockchain, net };
+}

@@ -1,31 +1,29 @@
 import { Response } from 'express';
-import { NODES } from './config';
-
-const fetch = require('node-fetch');
+import fetch, { RequestInit, Response as FetchResponse } from 'node-fetch';
+import { getNodes } from './config';
 
 type Url = string;
-type Blockchain = string;
-type Net = string;
 
 // Define constants
 const MAX_RETRIES: number = 5;
 
 // Handles proxy requests
 export const handler = async (req: any, res: Response) => {
-  req.current = req.current ? req.current : 0;
+  req.retries = req.retries || 0;
+  req.current = req.current || 0;
 
   // Destructure props from request object
-  const { method, url, headers, body } = req;
+  const { method, originalUrl, headers, body } = req;
 
   /* 
   Read parameters
   Blockchain is required, net defaults to mainnet if not provided
   */
 
-  const blockchain: Blockchain = req.params.blockchain.toLowerCase();
-  const net: Net = req.query.net ? req.query.net.toLowerCase() : 'mainnet'; // Default to mainnet
-
-  const blockchainNodes: Array<string> = NODES[blockchain][net];
+  const blockchainNodes: Array<string> = getNodes(
+    req.params.blockchain,
+    req.query.net
+  );
 
   // Select server
   const server: Url =
@@ -35,22 +33,23 @@ export const handler = async (req: any, res: Response) => {
 
   try {
     // Do request
-    const response = await fetch(
-      `${server}${url.replace(`/${req.params.blockchain}`, '')}`,
-      {
-        method: method,
-        body: JSON.stringify(body),
-        headers: { 'Content-Type': 'application/json' }
-      }
-    );
+    const reqOptions: RequestInit = {
+      method: method,
+      headers: headers
+    };
 
-    const data = await response.json();
+    if (!['GET', 'HEAD'].includes(method) && body) {
+      reqOptions.body = JSON.stringify(body);
+    }
 
-    // Send response data back to original caller
-    res.status(response.status).send(data);
+    const desiredPath = originalUrl.replace(`/${req.params.blockchain}`, '');
+    const destinationUrl = `${server}${desiredPath}`;
+
+    const response = await fetch(destinationUrl, reqOptions);
+    handleProxyResponse(response, res);
   } catch (err) {
     // Retry, x amount of times.
-    req.retries ? req.retries++ : (req.retries = 1);
+    req.retries++;
     req.current++;
 
     if (req.retries < MAX_RETRIES) {
@@ -62,3 +61,19 @@ export const handler = async (req: any, res: Response) => {
     }
   }
 };
+
+function extractNodeResponseHeaders(response: FetchResponse) {
+  return Object.entries(response.headers.raw()).reduce((headers, entry) => {
+    return { ...headers, [entry[0]]: entry[1].join(';') };
+  }, {});
+}
+
+async function handleProxyResponse(nodeResponse: FetchResponse, res: Response) {
+  if (!nodeResponse.ok) {
+    throw new Error('Error on the request');
+  }
+  const data = await nodeResponse.text();
+  const headers = extractNodeResponseHeaders(nodeResponse);
+  // Send response data back to original caller
+  res.set(headers).status(nodeResponse.status).send(data);
+}
