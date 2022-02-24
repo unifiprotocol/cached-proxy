@@ -25,6 +25,17 @@ curl -X POST 'http://localhost:8080/binance' \
 }'
 ```
 
+```sh
+curl -X POST 'https://proxy.unifiprotocol.com/ontology?net=testnet' \
+    -H "Content-Type: application/json" \
+    --data '{
+    "jsonrpc": "2.0",
+    "method": "eth_getBlockByNumber",
+    "params": ["latest", true],
+    "id": 1
+}'
+```
+
 Fetch a JSON from IPFS
 
 ```sh
