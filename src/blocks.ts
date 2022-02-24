@@ -1,6 +1,5 @@
+import fetch from 'node-fetch';
 import { NODES as blockchainNodes } from './config';
-
-const fetch = require('node-fetch');
 
 export function sortListByBlocks() {
   // Sorts node list by blockheight
