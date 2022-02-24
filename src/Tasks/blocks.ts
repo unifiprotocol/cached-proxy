@@ -3,7 +3,7 @@ import { NODES as blockchainNodes } from '../Blockchain';
 
 export function sortListByBlocks() {
   // Sorts node list by blockheight
-  Object.entries(blockchainNodes).forEach(async (blockchain: Array<any>) => {
+  Object.entries(blockchainNodes).forEach(async (blockchain) => {
     const mainnetNodes = blockchain[1].mainnet;
 
     const nodes = Promise.all(
