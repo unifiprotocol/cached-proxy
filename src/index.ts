@@ -31,6 +31,26 @@ app.use(
   })
 );
 
+// deprecated: we should update utrade finance to use the way implemented by the handler {proxyUrl}/OntologyTestnet
+app.use(
+  '/ont-testnet/',
+  createProxyMiddleware({
+    target: 'https://polaris1.ont.io:10339/',
+    changeOrigin: true,
+    pathRewrite: {
+      [`^/ont-testnet`]: ''
+    }
+  })
+);
+
+app.use(
+  '/metabase/',
+  createProxyMiddleware({
+    target: 'http://178.62.233.25:3000/',
+    changeOrigin: true
+  })
+);
+
 app.use('/:blockchain*', handler);
 
 const PORT = process.env.PORT ?? 8080;
