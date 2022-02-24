@@ -1,5 +1,5 @@
 import fetch from 'node-fetch';
-import { NODES as blockchainNodes } from './config';
+import { NODES as blockchainNodes } from '../Blockchain';
 
 export function sortListByBlocks() {
   // Sorts node list by blockheight
@@ -23,17 +23,10 @@ export function sortListByBlocks() {
       })
     );
 
-    nodes.then((data) => {
-      let sorted = data.sort(function (a: any, b: any) {
-        return a.blockHeight < b.blockHeight ? -1 : 1;
-      });
-
-      const newSortedNodes = sorted
-        .reverse()
-        .map((nodeData: any) => nodeData.node);
-
+    nodes.then((data: { blockHeight: number; node: string }[]) => {
+      const sorted = data.sort((a, b) => b.blockHeight - a.blockHeight);
       // Set mainnet to new sorted list
-      blockchain[1].mainnet = newSortedNodes;
+      blockchain[1].mainnet = sorted.map((nodeData) => nodeData.node);
     });
   });
 }
@@ -45,7 +38,7 @@ function getBlockHeight(url: string) {
       jsonrpc: '2.0',
       method: 'eth_blockNumber',
       params: [],
-      id: 83
+      id: 1
     })
   });
 }

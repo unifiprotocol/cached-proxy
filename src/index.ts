@@ -1,20 +1,13 @@
-import express, { Application } from 'express';
-import { sortListByBlocks } from './blocks';
-import { handler } from './handler';
+import express from 'express';
+import { sortListByBlocks } from './Tasks/blocks';
+import { handler } from './Blockchain/handler';
 import { createProxyMiddleware } from 'http-proxy-middleware';
-import apiCache from 'apicache';
 import cors from 'cors';
 import morgan from 'morgan';
-/*
-Proxy/Load balancer
-*/
+import { cacheMiddleware } from './Utils/Cache';
 
-const SORT_DELAY_IN_MINUTES: number = 1;
-
-// App port
-const port = process.env.PORT || 8080;
-
-const app: Application = express();
+// API
+const app = express();
 
 // Remove the X-Powered-By headers.
 app.disable('x-powered-by');
@@ -40,19 +33,17 @@ app.use(
 
 app.use('/:blockchain*', handler);
 
-app.listen(port);
+const PORT = process.env.PORT ?? 8080;
+app.listen(PORT, () => {
+  console.log(`cached-proxy running on port ${PORT}`);
+});
+
+// JOBS
+const SORT_DELAY_IN_MINUTES = 2 * 60 * 1000; // 2 minutes
 
 setInterval(() => {
   // Sort nodes by blocks
   sortListByBlocks();
-}, SORT_DELAY_IN_MINUTES * 60 * 1000);
+}, SORT_DELAY_IN_MINUTES);
 
 sortListByBlocks();
-
-function cacheMiddleware() {
-  const cacheOptions = {
-    statusCodes: { include: [200] },
-    appendKey: (req: Request) => req.method
-  };
-  return apiCache.options(cacheOptions).middleware();
-}

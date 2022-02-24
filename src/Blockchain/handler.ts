@@ -1,11 +1,11 @@
-import { Request, Response } from 'express';
+import { Response } from 'express';
 import fetch, { RequestInit } from 'node-fetch';
-import { getNodeUrl } from './utils';
+import { getNodeUrl } from '../Utils/Blockchain';
 import {
   createHeaderFilter,
   normalizeNodeFetchHeaders,
   requestShouldHaveBody
-} from './Utils/Requests';
+} from '../Utils/Requests';
 
 // Define constants
 const MAX_RETRIES: number = 5;

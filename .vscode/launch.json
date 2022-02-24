@@ -1,17 +1,19 @@
 {
-    // Use IntelliSense to learn about possible attributes.
-    // Hover to view descriptions of existing attributes.
-    // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
     "version": "0.2.0",
     "configurations": [
-        {
-            "type": "node",
-            "request": "attach",
-            "name": "Debug Worker",
-            "port": 9300,
-            "address": "localhost",
-            "localRoot": "${workspaceFolder}",
-            "restart": true
-        },
+      {
+        "type": "node",
+        "request": "launch",
+        "name": "Launch Proxy",
+        "program": "${workspaceFolder}/src/index.ts",
+        "preLaunchTask": "npm: build",
+        "sourceMaps": true,
+        "smartStep": true,
+        "internalConsoleOptions": "openOnSessionStart",
+        "console": "integratedTerminal",
+        "outFiles": [
+          "${workspaceFolder}/dist/**/*.js"
+        ]
+      }
     ]
-}
+  }
