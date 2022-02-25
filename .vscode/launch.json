@@ -1,0 +1,28 @@
+{
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "type": "node",
+      "request": "launch",
+      "name": "Launch Proxy",
+      "program": "${workspaceFolder}/src/index.ts",
+      "preLaunchTask": "npm: build",
+      "sourceMaps": true,
+      "smartStep": true,
+      "internalConsoleOptions": "openOnSessionStart",
+      "console": "integratedTerminal",
+      "outFiles": [
+        "${workspaceFolder}/dist/**/*.js"
+      ]
+    },
+    {
+      "type": "node",
+      "request": "attach",
+      "name": "Debug Proxy",
+      "port": 9300,
+      "address": "localhost",
+      "localRoot": "${workspaceFolder}",
+      "restart": true
+    },
+  ]
+}

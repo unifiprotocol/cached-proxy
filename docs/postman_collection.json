@@ -1,0 +1,120 @@
+{
+  "info": {
+    "_postman_id": "7f5e153c-a65e-4b2c-9b24-54f93da252f7",
+    "name": "Proxy",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "item": [
+    {
+      "name": "Tron",
+      "item": [
+        {
+          "name": "wallet/getnowblock",
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          },
+          "request": {
+            "method": "GET",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"id\": \"1645625162967\",\n    \"jsonrpc\": \"2.0\",\n    \"method\": \"eth_chainId\",\n    \"params\": []\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{baseUrl}}/tron/wallet/getnowblock",
+              "host": ["{{baseUrl}}"],
+              "path": ["tron", "wallet", "getnowblock"]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "event/transaction/",
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          },
+          "request": {
+            "method": "GET",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"id\": \"1645625162967\",\n    \"jsonrpc\": \"2.0\",\n    \"method\": \"eth_chainId\",\n    \"params\": []\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{baseUrl}}/tron/event/transaction/c5fe5ac9266b54f7d3009659088f58cfca16465dd38908158274546a62b28e4f",
+              "host": ["{{baseUrl}}"],
+              "path": [
+                "tron",
+                "event",
+                "transaction",
+                "c5fe5ac9266b54f7d3009659088f58cfca16465dd38908158274546a62b28e4f"
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "ChainID",
+      "request": {
+        "method": "POST",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n    \"id\": \"1645625162967\",\n    \"jsonrpc\": \"2.0\",\n    \"method\": \"eth_chainId\",\n    \"params\": []\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "{{proxyUrl}}",
+          "host": ["{{proxyUrl}}"]
+        }
+      },
+      "response": []
+    }
+  ],
+  "event": [
+    {
+      "listen": "prerequest",
+      "script": {
+        "type": "text/javascript",
+        "exec": [""]
+      }
+    },
+    {
+      "listen": "test",
+      "script": {
+        "type": "text/javascript",
+        "exec": [""]
+      }
+    }
+  ],
+  "variable": [
+    {
+      "key": "baseUrl",
+      "value": "http://localhost:8080"
+    },
+    {
+      "key": "blockchain",
+      "value": "binance"
+    },
+    {
+      "key": "proxyUrl",
+      "value": "{{baseUrl}}/{{blockchain}}"
+    }
+  ]
+}

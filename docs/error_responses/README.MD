@@ -1,0 +1,1 @@
+The purpose of this folder is to keep a list of errors from different providers in order to help the improvement of node request's error handling like rate limiting
