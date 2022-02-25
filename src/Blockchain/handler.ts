@@ -1,8 +1,9 @@
 import { Response } from 'express';
-import fetch, { RequestInit } from 'node-fetch';
+import fetch, { RequestInit, Response as NodeFetchResponse } from 'node-fetch';
 import { getNodeUrl } from '../Utils/Blockchain';
 import {
   createHeaderFilter,
+  isNodeFetchResponseError,
   normalizeNodeFetchHeaders,
   requestShouldHaveBody
 } from '../Utils/Requests';
@@ -11,7 +12,7 @@ import {
 const MAX_RETRIES: number = 5;
 
 const getNodeHeaders = createHeaderFilter((header) =>
-  ['content-type', 'authorization'].includes(header.toLowerCase())
+  ['content-type', 'authorization', 'accept'].includes(header.toLowerCase())
 );
 const getProxyResponseHeaders = createHeaderFilter((header) =>
   ['content-type'].includes(header.toLowerCase())
@@ -46,7 +47,7 @@ export const handler = async (req: any, res: Response): Promise<void> => {
       req.current++;
       return handler(req, res);
     }
-    res.end(`${err}`);
+    handleErrorResponse(err, res);
   }
 };
 function buildNodeRequestOptions(req: any): RequestInit {
@@ -63,4 +64,11 @@ function buildNodeRequestOptions(req: any): RequestInit {
 
 function isRetriable(error: any, req: any) {
   return req.retries < MAX_RETRIES;
+}
+
+async function handleErrorResponse(err: any, res: Response) {
+  if (isNodeFetchResponseError(err)) {
+    return res.sendStatus(err.status);
+  }
+  res.status(500).send();
 }

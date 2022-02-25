@@ -7,8 +7,8 @@ export const getNodes = (
   path: string
 ): string[] => {
   let subset = net;
-  if (blockchain === 'tron' && path.indexOf('event/') >= 0) {
-    subset += '_event';
+  if (blockchain === 'tron' && path.indexOf('wallet/') >= 0) {
+    subset += '_wallet';
   }
   if (!NODES[blockchain]) {
     throw new Error(`Blockchain ${blockchain} does not exist.`);

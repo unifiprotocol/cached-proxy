@@ -11,7 +11,7 @@ const app = express();
 
 // Remove the X-Powered-By headers.
 app.disable('x-powered-by');
-app.use(morgan('tiny'));
+app.use(morgan('dev'));
 
 // Parse JSON bodies
 app.use(express.json());

@@ -1,4 +1,4 @@
-export const FULLHOST_MAINNET_NODES: Array<string> = [
+export const WALLET_MAINNET_NODES: Array<string> = [
   'http://104.248.61.75:8090',
   'http://3.225.171.164:8090',
   'http://52.53.189.99:8090',
@@ -18,6 +18,6 @@ export const FULLHOST_MAINNET_NODES: Array<string> = [
   'http://34.237.210.82:8090'
 ];
 
-export const EVENT_MAINNET_NODES: Array<string> = ['https://api.trongrid.io'];
+export const MAINNET_NODES: Array<string> = ['https://api.trongrid.io'];
 
 export const TESTNET_NODES: Array<string> = [];

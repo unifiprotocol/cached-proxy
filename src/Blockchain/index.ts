@@ -32,8 +32,8 @@ import {
   TESTNET_NODES as ONTOLOGY_TESTNET_NODES
 } from './ontology';
 import {
-  EVENT_MAINNET_NODES as TRON_EVENT_MAINNET_NODES,
-  FULLHOST_MAINNET_NODES as TRON_FULLHOST_MAINNET_NODES,
+  WALLET_MAINNET_NODES as TRON_WALLET_MAINNET_NODES,
+  MAINNET_NODES as TRON_MAINNET_NODES,
   TESTNET_NODES as TRON_TESTNET_NODES
 } from './tron';
 import {
@@ -83,8 +83,8 @@ export const NODES: Record<string, Record<string, string[]>> = {
     testnet: ONTOLOGY_TESTNET_NODES
   },
   tron: {
-    mainnet_event: TRON_EVENT_MAINNET_NODES,
-    mainnet: TRON_FULLHOST_MAINNET_NODES,
+    mainnet_wallet: TRON_WALLET_MAINNET_NODES,
+    mainnet: TRON_MAINNET_NODES,
     tesnet_event: TRON_TESTNET_NODES,
     tesnet: TRON_TESTNET_NODES
   },

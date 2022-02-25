@@ -26,3 +26,6 @@ export const normalizeNodeFetchHeaders = (
     return { ...headers, [entry[0]]: entry[1].join(';') };
   }, {});
 };
+
+export const isNodeFetchResponseError = (err: any) =>
+  err && err?.constructor === NodeFetchResponse;
