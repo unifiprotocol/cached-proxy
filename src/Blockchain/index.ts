@@ -31,17 +31,17 @@ import {
   MAINNET_NODES as ONTOLOGY_MAINNET_NODES,
   TESTNET_NODES as ONTOLOGY_TESTNET_NODES
 } from './ontology';
-import {
-  WALLET_MAINNET_NODES as TRON_WALLET_MAINNET_NODES,
-  MAINNET_NODES as TRON_MAINNET_NODES,
-  TESTNET_NODES as TRON_TESTNET_NODES
-} from './tron';
+import { tronMainnet, tronTestnet } from './tron';
 import {
   MAINNET_NODES as ICON_MAINNET_NODES,
   TESTNET_NODES as ICON_TESTNET_NODES
 } from './icon';
+import { TronNodeList, Web3NodeList } from './Types';
 
-export const NODES: Record<string, Record<string, string[]>> = {
+export const NODES: Record<
+  string,
+  Record<string, Web3NodeList | TronNodeList>
+> = {
   avalanche: {
     mainnet: AVALANCHE_MAINNET_NODES,
     testnet: AVALANCHE_TESTNET_NODES
@@ -83,10 +83,8 @@ export const NODES: Record<string, Record<string, string[]>> = {
     testnet: ONTOLOGY_TESTNET_NODES
   },
   tron: {
-    mainnet_wallet: TRON_WALLET_MAINNET_NODES,
-    mainnet: TRON_MAINNET_NODES,
-    tesnet_event: TRON_TESTNET_NODES,
-    tesnet: TRON_TESTNET_NODES
+    mainnet: tronMainnet,
+    testnet: tronTestnet
   },
   icon: {
     mainnet: ICON_MAINNET_NODES,

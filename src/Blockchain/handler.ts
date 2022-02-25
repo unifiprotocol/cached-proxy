@@ -68,7 +68,8 @@ function isRetriable(error: any, req: any) {
 
 async function handleErrorResponse(err: any, res: Response) {
   if (isNodeFetchResponseError(err)) {
-    return res.sendStatus(err.status);
+    const error: NodeFetchResponse = err;
+    return res.sendStatus(error.status);
   }
   res.status(500).send();
 }

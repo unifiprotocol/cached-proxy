@@ -4,7 +4,12 @@ import { NODES as blockchainNodes } from '../Blockchain';
 export function sortListByBlocks() {
   // Sorts node list by blockheight
   Object.entries(blockchainNodes).forEach(async (blockchain) => {
-    const mainnetNodes = blockchain[1].mainnet;
+    if (blockchain[0] === 'tron') {
+      console.warn('skipping tron nodes order');
+      return;
+    }
+
+    const mainnetNodes = blockchain[1].mainnet as string[];
 
     const nodes = Promise.all(
       mainnetNodes.map(async (node: string) => {

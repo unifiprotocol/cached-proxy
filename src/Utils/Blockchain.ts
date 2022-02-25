@@ -1,23 +1,25 @@
 import { Blockchains } from '@unifiprotocol/utils';
+import { Web3NodeList } from '../Blockchain/Types';
 import { NODES } from '../Blockchain';
+import { getTronNodes } from '../Blockchain/tron';
 
 export const getNodes = (
   blockchain: keyof typeof NODES,
   net: string,
   path: string
 ): string[] => {
-  let subset = net;
-  if (blockchain === 'tron' && path.indexOf('wallet/') >= 0) {
-    subset += '_wallet';
-  }
   if (!NODES[blockchain]) {
     throw new Error(`Blockchain ${blockchain} does not exist.`);
   }
-  if (!NODES[blockchain][subset]) {
+  if (!NODES[blockchain][net]) {
     throw new Error(`Unknown network ${net} for ${blockchain}.`);
   }
 
-  return NODES[blockchain][subset];
+  if (blockchain === 'tron') {
+    return getTronNodes(net, path);
+  }
+
+  return NODES[blockchain][net] as Web3NodeList;
 };
 
 interface GetNodeUrlArgs {
