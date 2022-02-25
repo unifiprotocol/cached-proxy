@@ -51,7 +51,7 @@ app.use(
   })
 );
 
-app.use('/:blockchain*', handler);
+app.use('/rpc/:blockchain*', handler);
 
 const PORT = process.env.PORT ?? 8080;
 app.listen(PORT, () => {
