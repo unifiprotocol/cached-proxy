@@ -29,3 +29,10 @@ export const normalizeNodeFetchHeaders = (
 
 export const isNodeFetchResponseError = (err: any) =>
   err && err?.constructor === NodeFetchResponse;
+
+export const sanitizeBaseUrl = (url: string) => {
+  if (url.length > 0 && url[url.length - 1] === '/') {
+    return url.substring(0, url.length - 1);
+  }
+  return url;
+};

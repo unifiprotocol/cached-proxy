@@ -5,7 +5,8 @@ import {
   createHeaderFilter,
   isNodeFetchResponseError,
   normalizeNodeFetchHeaders,
-  requestShouldHaveBody
+  requestShouldHaveBody,
+  sanitizeBaseUrl
 } from '../Utils/Requests';
 
 // Define constants
@@ -25,14 +26,14 @@ export const handler = async (req: any, res: Response): Promise<void> => {
     req.current = req.current || 0;
 
     const reqOptions = buildNodeRequestOptions(req);
-    const path = req.originalUrl.replace(`/${req.params.blockchain}`, '');
+    const path = req.params[0] || '/';
     const server = getNodeUrl({
       blockchain: req.params.blockchain,
       net: req.query.net,
       nodeIndex: req.current,
       path
     });
-    const destinationUrl = `${server}${path}`;
+    const destinationUrl = `${sanitizeBaseUrl(server)}${path}`;
 
     const nodeRes = await fetch(destinationUrl, reqOptions);
     if (!nodeRes.ok) {
