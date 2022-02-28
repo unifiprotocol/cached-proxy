@@ -49,10 +49,10 @@ export const tronTestnet: TronNodeList = {
 
 export const getTronNodes = (net: string, path: string): string[] => {
   let type: TronNodeType = 'fullHost';
-  if (path.startsWith('/event')) {
+  if (path.startsWith('event')) {
     type = 'eventServer';
   }
-  if (path.startsWith('/walletsolidity')) {
+  if (path.startsWith('walletsolidity')) {
     type = 'solidityNode';
   }
 
