@@ -1,12 +1,13 @@
 import { Response } from 'express';
 import fetch, { RequestInit, Response as NodeFetchResponse } from 'node-fetch';
+
 import { getNodeUrl } from '../Utils/Blockchain';
 import {
   createHeaderFilter,
   isNodeFetchResponseError,
   normalizeNodeFetchHeaders,
   requestShouldHaveBody,
-  sanitizeBaseUrl
+  concatBaseUrlAndPath
 } from '../Utils/Requests';
 
 // Define constants
@@ -33,22 +34,25 @@ export const handler = async (req: any, res: Response): Promise<void> => {
       nodeIndex: req.current,
       path
     });
-    const destinationUrl = `${sanitizeBaseUrl(server)}${path}`;
 
+    const destinationUrl = concatBaseUrlAndPath(server, path);
     const nodeRes = await fetch(destinationUrl, reqOptions);
+
     if (!nodeRes.ok) {
       throw nodeRes;
     }
     const data = await nodeRes.text();
     const headers = normalizeNodeFetchHeaders(nodeRes);
+
     res.set(getProxyResponseHeaders(headers)).status(nodeRes.status).send(data);
-  } catch (err) {
-    if (isRetriable(err, req)) {
+  } catch (error) {
+    console.error(error);
+    if (isRetriable(error, req)) {
       req.retries++;
       req.current++;
       return handler(req, res);
     }
-    handleErrorResponse(err, res);
+    handleErrorResponse(error, res);
   }
 };
 function buildNodeRequestOptions(req: any): RequestInit {
@@ -63,8 +67,17 @@ function buildNodeRequestOptions(req: any): RequestInit {
   return reqOptions;
 }
 
-function isRetriable(error: any, req: any) {
-  return req.retries < MAX_RETRIES;
+function isRetriable(error: any, originalReq: any) {
+  let conditions = [originalReq.retries < MAX_RETRIES];
+  if (!isNodeFetchResponseError(error)) {
+    // non response errors means a code error
+    return false;
+  }
+
+  const nonRetriableStatusCodes = [404];
+  conditions.push(!nonRetriableStatusCodes.includes(error.status));
+
+  return !conditions.some((passed) => !passed);
 }
 
 async function handleErrorResponse(err: any, res: Response) {
