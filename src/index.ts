@@ -33,7 +33,7 @@ app.use(
 
 app.use(
   '/bridge/',
-  cacheMiddleware(300000), // 5m
+  cacheMiddleware(15_000), // 15s
   createProxyMiddleware({
     target: 'https://ubridge-service-yqfyt.ondigitalocean.app/',
     changeOrigin: true,
