@@ -24,7 +24,7 @@ app.get('/favicon.ico', function (req, res) {
 
 app.use(
   '/ipfs/',
-  cacheMiddleware(2629800000), // 1mo
+  cacheMiddleware(604800000), // 1w
   createProxyMiddleware({
     target: 'https://cloudflare-ipfs.com/',
     changeOrigin: true
