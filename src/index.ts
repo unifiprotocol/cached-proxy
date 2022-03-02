@@ -24,7 +24,7 @@ app.get('/favicon.ico', function (req, res) {
 
 app.use(
   '/ipfs/',
-  cacheMiddleware(),
+  cacheMiddleware(2629800000), // 1mo
   createProxyMiddleware({
     target: 'https://cloudflare-ipfs.com/',
     changeOrigin: true
@@ -33,6 +33,7 @@ app.use(
 
 app.use(
   '/bridge/',
+  cacheMiddleware(300000), // 5m
   createProxyMiddleware({
     target: 'https://ubridge-service-yqfyt.ondigitalocean.app/',
     changeOrigin: true,
