@@ -36,7 +36,7 @@ export const concatBaseUrlAndPath = (url: string, path: string) => {
   if (path.startsWith('/')) {
     path = path.substring(1, url.length);
   }
-  return `${url}/${path}`;
+  return `${url}${path.length > 0 ? `/${path}` : ''}`;
 };
 
 const removeTrailingSlash = (str: string) => {
