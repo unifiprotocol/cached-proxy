@@ -44,9 +44,9 @@ app.use(
 );
 
 app.use(
-  '/metabase/',
+  '/bridge/',
   createProxyMiddleware({
-    target: 'http://178.62.233.25:3000/',
+    target: 'https://ubridge-service-yqfyt.ondigitalocean.app/',
     changeOrigin: true
   })
 );
