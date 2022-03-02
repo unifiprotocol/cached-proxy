@@ -47,7 +47,10 @@ app.use(
   '/bridge/',
   createProxyMiddleware({
     target: 'https://ubridge-service-yqfyt.ondigitalocean.app/',
-    changeOrigin: true
+    changeOrigin: true,
+    pathRewrite: {
+      [`^/bridge`]: ''
+    }
   })
 );
 
