@@ -37,6 +37,7 @@ import {
   TESTNET_NODES as ICON_TESTNET_NODES
 } from './icon';
 import { TronNodeList, Web3NodeList } from './Types';
+import { Blockchains } from '@unifiprotocol/utils';
 
 export const NODES: Record<
   string,
@@ -90,4 +91,11 @@ export const NODES: Record<
     mainnet: ICON_MAINNET_NODES,
     testnet: ICON_TESTNET_NODES
   }
+};
+Blockchains;
+export const INTERNAL_NODES: Record<string, string> = {
+  [Blockchains.Binance]: 'http://159.65.160.46:8545',
+  [Blockchains.FTM]: 'http://128.199.33.233:18545',
+  [Blockchains.Iotex]: 'http://192.81.208.241:8545',
+  [Blockchains.Tron]: 'http://104.248.61.75'
 };
