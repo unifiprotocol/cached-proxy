@@ -5,6 +5,7 @@ import { createProxyMiddleware } from 'http-proxy-middleware';
 import cors from 'cors';
 import morgan from 'morgan';
 import { cacheMiddleware } from './Utils/Cache';
+import { INTERNAL_NODES } from './Blockchain';
 
 // API
 const app = express();
@@ -13,9 +14,23 @@ const app = express();
 app.disable('x-powered-by');
 app.use(morgan('dev'));
 
+// Add cors to response
+app.use(cors());
+
+// RPC Internal not using express.json() middleware
+Object.entries(INTERNAL_NODES).forEach(([blockchain, internalRpcUrl]) => {
+  app.use(
+    `/rpc-internal/${blockchain}/`,
+    createProxyMiddleware({
+      target: internalRpcUrl,
+      changeOrigin: true,
+      pathRewrite: () => '/'
+    })
+  );
+});
+
 // Parse JSON bodies
 app.use(express.json());
-app.use(cors());
 
 // To prevent favicon request going to handler.
 app.get('/favicon.ico', function (req, res) {
