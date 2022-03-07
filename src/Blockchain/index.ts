@@ -92,7 +92,7 @@ export const NODES: Record<
     testnet: ICON_TESTNET_NODES
   }
 };
-Blockchains;
+
 export const INTERNAL_NODES: Record<string, string> = {
   [Blockchains.Binance]: 'http://159.65.160.46:8545',
   [Blockchains.FTM]: 'http://128.199.33.233:18545',
