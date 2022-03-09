@@ -2,14 +2,12 @@
 
 export const MAINNET_NODES: Array<string> = [
   'https://polygon-rpc.com/',
-  'https://speedy-nodes-nyc.moralis.io/447e4a84da6e53dc149f22a6/polygon/mainnet',
-
-  'http://68.183.144.167:8545',
   // Backup
-  'https://matic-mainnet.chainstacklabs.com',
   'https://rpc-mainnet.maticvigil.com',
   'https://rpc-mainnet.matic.quiknode.pro',
-  'https://matic-mainnet-full-rpc.bwarelabs.com'
+  'https://matic-mainnet-full-rpc.bwarelabs.com',
+  'https://matic-mainnet.chainstacklabs.com/',
+  'https://polygon-mainnet.g.alchemy.com/v2/fD5HjNcSOLvLdY1-Os1sPs9iGmrrpO4A'
 ];
 
 export const TESTNET_NODES: Array<string> = [
