@@ -97,5 +97,6 @@ export const INTERNAL_NODES: Record<string, string> = {
   [Blockchains.Binance]: 'http://159.65.160.46:8545',
   [Blockchains.FTM]: 'http://128.199.33.233:18545',
   [Blockchains.Iotex]: 'http://192.81.208.241:8545',
-  [Blockchains.Tron]: 'http://104.248.61.75'
+  [Blockchains.Tron]: 'http://104.248.61.75',
+  [Blockchains.Avalanche]: 'http://35.174.115.80:9650/ext/bc/C/rpc'
 };
