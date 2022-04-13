@@ -18,13 +18,13 @@ app.use(morgan('dev'));
 app.use(cors());
 
 // RPC Internal not using express.json() middleware
-Object.entries(INTERNAL_NODES).forEach(([blockchain, internalRpcUrl]) => {
+Object.entries(INTERNAL_NODES).forEach(([blockchain, { url, pathRewrite }]) => {
   app.use(
     `/rpc-internal/${blockchain}/`,
     createProxyMiddleware({
-      target: internalRpcUrl,
+      target: url,
       changeOrigin: true,
-      pathRewrite: () => '/'
+      pathRewrite: () => pathRewrite ?? '/'
     })
   );
 });
