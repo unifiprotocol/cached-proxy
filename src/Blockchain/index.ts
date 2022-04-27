@@ -99,7 +99,7 @@ export const INTERNAL_NODES: Record<
 > = {
   [Blockchains.Binance]: { url: 'http://159.65.160.46:8545' },
   [Blockchains.FTM]: { url: 'http://128.199.33.233:18545' },
-  [Blockchains.Iotex]: { url: 'http://192.81.208.241:8545' },
+  [Blockchains.Iotex]: { url: 'http://192.81.208.241:15014' },
   [Blockchains.Tron]: { url: 'http://104.248.61.75' },
   [Blockchains.Avalanche]: {
     url: 'http://35.174.115.80:9650/',
