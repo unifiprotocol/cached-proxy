@@ -29,6 +29,17 @@ Object.entries(INTERNAL_NODES).forEach(([blockchain, { url, pathRewrite }]) => {
   );
 });
 
+app.use(
+  '/darbi/',
+  createProxyMiddleware({
+    target: 'https://darbi-service-8chxa.ondigitalocean.app/',
+    changeOrigin: true,
+    pathRewrite: {
+      [`^/darbi`]: ''
+    }
+  })
+);
+
 // Parse JSON bodies
 app.use(express.json());
 
@@ -54,17 +65,6 @@ app.use(
     changeOrigin: true,
     pathRewrite: {
       [`^/bridge`]: ''
-    }
-  })
-);
-
-app.use(
-  '/darbi/',
-  createProxyMiddleware({
-    target: 'https://darbi-service-8chxa.ondigitalocean.app/',
-    changeOrigin: true,
-    pathRewrite: {
-      [`^/darbi`]: ''
     }
   })
 );
