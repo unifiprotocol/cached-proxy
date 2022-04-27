@@ -58,6 +58,17 @@ app.use(
   })
 );
 
+app.use(
+  '/darbi/',
+  createProxyMiddleware({
+    target: 'https://darbi-service-8chxa.ondigitalocean.app/',
+    changeOrigin: true,
+    pathRewrite: {
+      [`^/darbi`]: ''
+    }
+  })
+);
+
 app.use(['/rpc/:blockchain/**', '/rpc/:blockchain'], handler);
 
 const PORT = process.env.PORT ?? 8080;
