@@ -103,7 +103,7 @@ export const INTERNAL_NODES: Record<
   [Blockchains.Tron]: { url: 'http://104.248.61.75' },
   [Blockchains.Harmony]: { url: 'http://13.58.113.115:9500' },
   [Blockchains.Avalanche]: {
-    url: 'http://35.174.115.80:9650/',
+    url: 'http://3.17.71.172:9650/',
     pathRewrite: '/ext/bc/C/rpc'
   }
 };
