@@ -98,7 +98,7 @@ export const INTERNAL_NODES: Record<
   { url: string; pathRewrite?: string }
 > = {
   [Blockchains.Binance]: { url: 'http://3.15.233.91:8545/' },
-  [Blockchains.FTM]: { url: 'http://18.191.173.110:18545' },
+  [Blockchains.FTM]: { url: 'http://3.16.157.66:18545' },
   [Blockchains.Iotex]: { url: 'http://192.81.208.241:15014' },
   [Blockchains.Tron]: { url: 'http://104.248.61.75' },
   [Blockchains.Harmony]: { url: 'http://13.58.113.115:9500' },
