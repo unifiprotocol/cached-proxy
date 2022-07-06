@@ -58,7 +58,6 @@ export function normalizeBlockchainAndNetwork(
     case Blockchains.EthereumRopsten.toLowerCase():
       return { blockchain: 'ethereum', net: 'ropsten' };
     case Blockchains.BinanceTestnet.toLowerCase():
-    case 'BinanceTesnet'.toLowerCase(): //retro compatibility in case somewhere is being used
       return { blockchain: 'binance', net: 'testnet' };
     case Blockchains.BTTC.toLowerCase():
       return { blockchain: 'bittorrent', net: 'mainnet' };
