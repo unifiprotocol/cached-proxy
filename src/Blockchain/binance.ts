@@ -20,7 +20,9 @@ export const MAINNET_NODES: Array<string> = [
   'https://bsc-dataseed1.binance.org/',
   'https://bsc-dataseed2.binance.org/',
   'https://bsc-dataseed3.binance.org/',
-  'https://bsc-dataseed4.binance.org/'
+  'https://bsc-dataseed4.binance.org/',
+
+  'https://bsc-mainnet.nodereal.io/v1/9871a25d3470473ea369f204b862866c'
 ];
 
 export const TESTNET_NODES: Array<string> = [
