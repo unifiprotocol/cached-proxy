@@ -154,10 +154,10 @@
     "@types/mime" "^1"
     "@types/node" "*"
 
-"@unifiprotocol/utils@^2.2.5":
-  version "2.2.5"
-  resolved "https://registry.yarnpkg.com/@unifiprotocol/utils/-/utils-2.2.5.tgz#0c850f211a4513a2b79f64589cd29c7cd5185c1d"
-  integrity sha512-oR/1EM8zhlYddJfwo8DtQfaZyf3g6glSL29AIwukezDVlBI2imOFZmogup0x81uq3ib8c2U0BhEPuWR+56JxMA==
+"@unifiprotocol/utils@^2.3.3":
+  version "2.3.3"
+  resolved "https://registry.yarnpkg.com/@unifiprotocol/utils/-/utils-2.3.3.tgz#b1eb1ca17194893d99d653b3c9fbc48318d9ba7b"
+  integrity sha512-0DDPiSQkutxTEJt4Z2ffmgp2fH18dUQMOiwajtQYOPnM1osxW2LJcirQKnU0f1pDLUFK/HpxDKSCBlXuSXa2QQ==
   dependencies:
     bignumber.js "^9.0.1"
     keccak "^3.0.2"
