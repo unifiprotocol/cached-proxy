@@ -27,6 +27,8 @@
     "build": "tsc --incremental",
     "build:watch": "yarn watch yarn build",
     "start": "node dist/index.js",
-    "start:watch": "yarn watch node -r ts-node/register --inspect=9300 src/index.ts"
+    "start:watch": "yarn watch node -r ts-node/register --inspect=9300 src/index.ts",
+    "start:balancer": "node dist/balancer.js",
+    "start:balancer:watch": "yarn watch node -r ts-node/register --inspect=9301 src/balancer.ts"
   }
 }

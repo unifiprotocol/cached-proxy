@@ -24,5 +24,14 @@
       "localRoot": "${workspaceFolder}",
       "restart": true
     },
+    {
+      "type": "node",
+      "request": "attach",
+      "name": "Debug Balancer",
+      "port": 9301,
+      "address": "localhost",
+      "localRoot": "${workspaceFolder}",
+      "restart": true
+    },
   ]
 }
