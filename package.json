@@ -25,7 +25,7 @@
     "watch": "nodemon --watch \"src/**\" --ext \"ts,json\" --exec",
     "tsc": "tsc --incremental",
     "build": "tsc --incremental",
-    "build:balancer": "tsc --incremental && node scripts/balancer.js",
+    "build:balancer": "tsc --incremental && node scripts/validate_worker_urls_env.js",
     "build:watch": "yarn watch yarn build",
     "start": "node dist/index.js",
     "start:watch": "yarn watch node -r ts-node/register --inspect=9300 src/index.ts",
