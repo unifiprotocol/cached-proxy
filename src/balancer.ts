@@ -13,7 +13,7 @@ app.use(cors());
 app.use(
   '/',
   createProxyMiddleware({
-    target: 'https://proxy.unifiprotocol.com',
+    target: 'https://proxy.unifiprotocol.com/worker',
     router: getRandomWorker,
     changeOrigin: true
   })
