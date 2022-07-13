@@ -72,6 +72,7 @@ app.use(
 app.use(['/rpc/:blockchain/**', '/rpc/:blockchain'], handler);
 
 const PORT = process.env.PORT ?? 8080;
+
 app.listen(PORT, () => {
   console.log(`cached-proxy running on port ${PORT}`);
 });
