@@ -53,6 +53,8 @@ export function normalizeBlockchainAndNetwork(
   switch (blockchain) {
     case Blockchains.OntologyTestnet.toLowerCase():
       return { blockchain: 'ontology', net: 'testnet' };
+    case Blockchains.EthereumGoerli.toLowerCase():
+      return { blockchain: 'ethereum', net: 'goerli' };
     case Blockchains.EthereumRinkeby.toLowerCase():
       return { blockchain: 'ethereum', net: 'rinkeby' };
     case Blockchains.EthereumRopsten.toLowerCase():
