@@ -1,6 +1,6 @@
 {
   "dependencies": {
-    "@unifiprotocol/utils": "^2.3.3",
+    "@unifiprotocol/utils": "^2.3.4",
     "apicache": "^1.6.3",
     "cors": "^2.8.5",
     "express": "^4.17.2",
