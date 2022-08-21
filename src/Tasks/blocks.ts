@@ -41,8 +41,8 @@ function getBlockHeight(url: string) {
     method: 'POST',
     body: JSON.stringify({
       jsonrpc: '2.0',
-      method: 'eth_blockNumber',
-      params: [],
+      method: 'eth_getBlockByNumber',
+      params: ['latest', true],
       id: 1
     })
   });
