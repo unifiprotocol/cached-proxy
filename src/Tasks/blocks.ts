@@ -11,15 +11,19 @@ export function sortListByBlocks() {
 
     const mainnetNodes = blockchain[1].mainnet as string[];
 
-    const nodes = Promise.all(
+    const nodes = await Promise.all(
       mainnetNodes.map(async (node: string) => {
         try {
           const response = await getBlockHeight(node);
-          const data = await response.json();
 
+          if (!response.ok) {
+            return { node, blockHeight: 0 };
+          }
+
+          const data = await response.json();
           return {
             node: node,
-            blockHeight: parseInt(data.result)
+            blockHeight: parseInt(data.result.number)
           };
         } catch (e) {
           // For incorrect node response. Pass 0
@@ -28,11 +32,9 @@ export function sortListByBlocks() {
       })
     );
 
-    nodes.then((data: { blockHeight: number; node: string }[]) => {
-      const sorted = data.sort((a, b) => b.blockHeight - a.blockHeight);
-      // Set mainnet to new sorted list
-      blockchain[1].mainnet = sorted.map((nodeData) => nodeData.node);
-    });
+    const sorted = nodes.sort((a, b) => b.blockHeight - a.blockHeight);
+    // Set mainnet to new sorted list
+    blockchain[1].mainnet = sorted.map((nodeData) => nodeData.node);
   });
 }
 
@@ -44,6 +46,11 @@ function getBlockHeight(url: string) {
       method: 'eth_getBlockByNumber',
       params: ['latest', true],
       id: 1
-    })
+    }),
+    headers: {
+      Accept: '*/*',
+      'Accept-Encoding': 'gzip, deflate, br',
+      'Content-Type': 'application/json'
+    }
   });
 }
