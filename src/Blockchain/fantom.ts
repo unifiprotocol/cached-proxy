@@ -1,7 +1,7 @@
 // https://rpc.info/
 
 export const MAINNET_NODES: Array<string> = [
-  'http://3.16.157.66:18545',
+  'http:/3.141.107.194:80/',
   'https://rpc.ftm.tools/',
   'https://rpc.fantom.network/',
   'https://rpc2.fantom.network/',
