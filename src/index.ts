@@ -6,6 +6,7 @@ import cors from 'cors';
 import morgan from 'morgan';
 import { cacheMiddleware } from './Utils/Cache';
 import { INTERNAL_NODES } from './Blockchain';
+import { env } from 'process';
 
 // API
 const app = express();
@@ -36,6 +37,17 @@ app.use(
     changeOrigin: true,
     pathRewrite: {
       [`^/darbi`]: ''
+    }
+  })
+);
+
+app.use(
+  '/up-v2-api/',
+  createProxyMiddleware({
+    target: 'https://walrus-app-zchcr.ondigitalocean.app/',
+    changeOrigin: true,
+    pathRewrite: {
+      [`^/up-v2-api`]: ''
     }
   })
 );
