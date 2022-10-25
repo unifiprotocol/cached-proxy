@@ -90,11 +90,11 @@ app.listen(PORT, () => {
 });
 
 // JOBS
-const SORT_DELAY_IN_MINUTES = 2 * 60 * 1000; // 2 minutes
+const SORT_DELAY_IN_MS = 30 * 1000; // 30 seconds
 
 setInterval(() => {
   // Sort nodes by blocks
   sortListByBlocks();
-}, SORT_DELAY_IN_MINUTES);
+}, SORT_DELAY_IN_MS);
 
 sortListByBlocks();
