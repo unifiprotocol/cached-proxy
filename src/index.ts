@@ -43,6 +43,7 @@ app.use(
 
 app.use(
   '/up-v2-api/',
+  cacheMiddleware(15_000),
   createProxyMiddleware({
     target: 'https://walrus-app-zchcr.ondigitalocean.app/',
     changeOrigin: true,
