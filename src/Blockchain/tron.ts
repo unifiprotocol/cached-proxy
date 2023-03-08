@@ -3,10 +3,7 @@ import { TronNodeList, TronNodeType } from './Types';
 const nodePort = 8090;
 const solidityNodePort = 8091;
 
-const unifiNode = 'http://104.248.61.75';
-
 const BASE_NODE_MAINNET_NODES: Array<string> = [
-  unifiNode,
   'http://3.225.171.164',
   'http://52.53.189.99',
   'http://18.196.99.16',

@@ -96,14 +96,4 @@ export const NODES: Record<
 export const INTERNAL_NODES: Record<
   string,
   { url: string; pathRewrite?: string }
-> = {
-  [Blockchains.Binance]: { url: 'http://3.15.233.91:8545/' },
-  [Blockchains.FTM]: { url: 'http://3.141.107.194:80/' },
-  [Blockchains.Iotex]: { url: 'http://192.81.208.241:15014' },
-  [Blockchains.Tron]: { url: 'http://104.248.61.75:8090' },
-  [Blockchains.Harmony]: { url: 'http://13.58.113.115:9500' },
-  [Blockchains.Avalanche]: {
-    url: 'http://3.17.71.172:9650/',
-    pathRewrite: '/ext/bc/C/rpc'
-  }
-};
+> = {};

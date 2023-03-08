@@ -2,6 +2,7 @@
 
 export const MAINNET_NODES: Array<string> = [
   'https://cloudflare-eth.com',
+  'https://eth.llamarpc.com',
   'https://main-light.eth.linkpool.io',
   'https://mainnet.infura.io/v3/0ff955c9016745feb32f758355fb0976'
 ];
